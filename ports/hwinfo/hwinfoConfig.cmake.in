@@ -1,0 +1,27 @@
+include(FindPackageHandleStandardArgs)
+
+if (NOT HWINFO_FOUND)
+    find_library(HWINFO_LIBRARY_DEBUG
+        NAMES hwinfo
+        PATH_SUFFIXES lib
+    )
+
+    find_path(HWINFO_INCLUDE_DIR
+        NAMES hwinfo
+        PATH_SUFFIXES include
+    )
+
+    add_library(hwinfo::HWinfo STATIC IMPORTED)
+
+    set(HWINFO_LIBRARY_RELEASE ${HWINFO_LIBRARY_DEBUG}/../../../lib/hwinfo.lib)
+    get_filename_component(HWINFO_LIBRARY_RELEASE ${HWINFO_LIBRARY_RELEASE} REALPATH)
+
+    set_target_properties(hwinfo::HWinfo
+        PROPERTIES
+        IMPORTED_LOCATION_DEBUG "${HWINFO_LIBRARY_DEBUG}"
+        IMPORTED_LOCATION_RELEASE "${HWINFO_LIBRARY_RELEASE}"
+        INTERFACE_INCLUDE_DIRECTORIES "${HWINFO_INCLUDE_DIR}"
+    )
+
+    find_package_handle_standard_args(hwinfo DEFAULT_MSG HWINFO_LIBRARY_DEBUG HWINFO_LIBRARY_RELEASE HWINFO_INCLUDE_DIR)
+endif()
