@@ -1,3 +1,12 @@
 {
-  "default": {}
+  "default": {
+    "hwinfo": {
+      "baseline": "1.0.0",
+      "port-version": 0
+    },
+    "open62541": {
+      "baseline": "1.3.9",
+      "port-version": 0
+    }
+  }
 }
